@@ -9,11 +9,11 @@ export function activate(context: vscode.ExtensionContext) {
 
 	vscode.workspace.onDidSaveTextDocument(document => {
 		core.findAndCountPomodoroText(document.getText(), {
-			interval: (time: number) => {
+			interval: time => {
 				statusBarItem.text = `$(clock) ${Duration.fromMillis(time * 1000).toFormat('mm:ss')}`;
 				statusBarItem.show();
 			},
-			finish: (ptext: any) =>
+			finish: ptext =>
 				  vscode.window.showInformationMessage(ptext.content, { modal: true }),
 			stop: () => statusBarItem.hide()
 		});

@@ -3,6 +3,7 @@
 	"displayName": "Pomodoro Edit",
 	"description": "Pomodoro timer for VSCode",
 	"version": "0.1.0",
+	"publisher": "seitotanaka",
 	"repository": "https://github.com/seachicken/vscode-pomodoro-edit",
 	"license": "MIT",
 	"engines": {
