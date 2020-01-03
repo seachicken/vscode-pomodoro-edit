@@ -5,9 +5,9 @@ declare module "pomodoro-edit-core" {
     }
 
     export interface Callbacks {
-        interval: (time: number) => void;
-        finish: (ptext: PomodoroText) => void;
-        stop: () => void;
+        interval?: (time: number) => void;
+        finish?: (ptext: PomodoroText) => void;
+        stop?: () => void;
     }
 
     export interface PomodoroText {
