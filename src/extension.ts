@@ -46,7 +46,7 @@ export function activate(context: ExtensionContext) {
 					progressWrapper.resolve();
 				}
 
-				window.showInformationMessage(ptext.content, { modal: true });
+				window.showInformationMessage(`Finished! ${ptext.content}`, { modal: true });
 			},
 			cancel: () => {
 				if (progressWrapper.reject) {
