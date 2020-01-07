@@ -1,7 +1,7 @@
 declare module "pomodoro-edit-core" {
     export default class Core {
         constructor();
-        findAndCountPomodoroText(text: string, callbacks: Callbacks): void;
+        findAndCountPomodoroText(text: string, filePath: string, callbacks: Callbacks): void;
     }
 
     export interface Callbacks {

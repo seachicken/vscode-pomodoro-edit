@@ -22,7 +22,7 @@ export function activate(context: ExtensionContext) {
 			return;
 		}
 
-		core.findAndCountPomodoroText(document.getText(), {
+		core.findAndCountPomodoroText(document.getText(), document.fileName, {
 			start: () => {
 				const task: any = window.withProgress({ location: ProgressLocation.Notification }, p => {
 					progressWrapper.progress = p;
