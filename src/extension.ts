@@ -1,6 +1,7 @@
 import { ExtensionContext, StatusBarAlignment, workspace, ProgressLocation, window, Progress } from 'vscode';
 import * as path from 'path';
 import { Duration } from 'luxon';
+import * as WebSocket from 'ws';
 import Core from 'pomodoro-edit-core';
 
 export function activate(context: ExtensionContext) {
@@ -16,6 +17,10 @@ export function activate(context: ExtensionContext) {
 		resolve?: () => void,
 		reject?: () => void
 	} = {};
+
+	let socket: WebSocket;
+	const wss = new WebSocket.Server({ port: 62115 });
+	wss.on('connection', ws => socket = ws);
 
 	workspace.onDidSaveTextDocument(document => {
 		if (!isTarget(document.fileName)) {
@@ -46,7 +51,12 @@ export function activate(context: ExtensionContext) {
 					progressWrapper.resolve();
 				}
 
-				window.showInformationMessage(`Finished! ${ptext.content}`, { modal: true });
+				const msg = `Finished! ${ptext.content}`;
+				if (socket) {
+					socket.send(msg);
+				} else {
+					window.showInformationMessage(msg);
+				}
 			},
 			cancel: () => {
 				if (progressWrapper.reject) {
