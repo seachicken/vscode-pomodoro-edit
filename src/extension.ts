@@ -52,10 +52,10 @@ export function activate(context: ExtensionContext) {
 				}
 
 				const msg = `Finished! ${ptext.content}`;
-				if (socket) {
+				if (socket && socket.readyState === WebSocket.OPEN) {
 					socket.send(msg);
 				} else {
-					window.showInformationMessage(msg);
+					window.showInformationMessage(msg, { modal: true });
 				}
 			},
 			cancel: () => {
