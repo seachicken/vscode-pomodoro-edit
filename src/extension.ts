@@ -42,6 +42,14 @@ export function activate(context: ExtensionContext) {
 				if (progressWrapper.progress) {
 					progressWrapper.progress.report({ increment: 100 / ptext.time, message: ptext.content });
 				}
+				if (socket && socket.readyState === WebSocket.OPEN) {
+					const ptextWithType = {
+						type: 'interval',
+						remaining,
+						...ptext
+					};
+					socket.send(JSON.stringify(ptextWithType));
+				}
 
 				statusBarItem.text = `$(clock) ${Duration.fromMillis(remaining * 1000).toFormat('mm:ss')}`;
 				statusBarItem.show();
@@ -51,11 +59,14 @@ export function activate(context: ExtensionContext) {
 					progressWrapper.resolve();
 				}
 
-				const msg = `Finished! ${ptext.content}`;
 				if (socket && socket.readyState === WebSocket.OPEN) {
-					socket.send(msg);
+					const ptextWithType = {
+						type: 'finish',
+						...ptext
+					};
+					socket.send(JSON.stringify(ptextWithType));
 				} else {
-					window.showInformationMessage(msg, { modal: true });
+					window.showInformationMessage(`Finished! ${ptext.content}`, { modal: true });
 				}
 			},
 			cancel: () => {
