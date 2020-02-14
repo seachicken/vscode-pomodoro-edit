@@ -6,8 +6,6 @@ import Core from 'pomodoro-edit-core';
 
 export function activate(context: ExtensionContext) {
 	const core = new Core();
-	const statusBarItem = window.createStatusBarItem(StatusBarAlignment.Right, 100);
-	context.subscriptions.push(statusBarItem);
 
 	const progressWrapper: {
 		progress?: Progress<{
@@ -40,7 +38,8 @@ export function activate(context: ExtensionContext) {
 			},
 			interval: (remaining, ptext) => {
 				if (progressWrapper.progress) {
-					progressWrapper.progress.report({ increment: 100 / ptext.time, message: ptext.content });
+					const time = Duration.fromMillis(remaining * 1000).toFormat('m:ss');
+					progressWrapper.progress.report({ increment: 100 / ptext.time, message: `${ptext.content} (${time})` });
 				}
 				if (socket && socket.readyState === WebSocket.OPEN) {
 					const ptextWithType = {
@@ -50,9 +49,6 @@ export function activate(context: ExtensionContext) {
 					};
 					socket.send(JSON.stringify(ptextWithType));
 				}
-
-				statusBarItem.text = `$(clock) ${Duration.fromMillis(remaining * 1000).toFormat('mm:ss')}`;
-				statusBarItem.show();
 			},
 			finish: ptext => {
 				if (progressWrapper.resolve) {
@@ -73,8 +69,6 @@ export function activate(context: ExtensionContext) {
 				if (progressWrapper.reject) {
 					progressWrapper.reject();
 				}
-
-				statusBarItem.hide();
 			}
 		});
 	});
