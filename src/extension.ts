@@ -1,4 +1,4 @@
-import { ExtensionContext, StatusBarAlignment, workspace, ProgressLocation, window, Progress } from 'vscode';
+import { ExtensionContext, workspace, ProgressLocation, window, Progress } from 'vscode';
 import * as path from 'path';
 import { Duration } from 'luxon';
 import * as WebSocket from 'ws';
