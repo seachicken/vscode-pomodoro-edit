@@ -25,7 +25,7 @@ export function activate(context: ExtensionContext) {
 			return;
 		}
 
-		core.findAndCountPomodoroText(document.getText(), document.fileName, {
+		core.findAndStartTimer(document.getText(), document.fileName, {
 			start: () => {
 				const task: any = window.withProgress({ location: ProgressLocation.Notification }, p => {
 					progressWrapper.progress = p;
@@ -62,7 +62,7 @@ export function activate(context: ExtensionContext) {
 					};
 					socket.send(JSON.stringify(ptextWithType));
 				} else {
-					window.showInformationMessage(`Finished! ${ptext.content}`, { modal: true });
+					window.showInformationMessage(`🍅 Finished!\n${ptext.content}`, { modal: true });
 				}
 			},
 			cancel: () => {

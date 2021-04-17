@@ -1,7 +1,7 @@
 declare module "pomodoro-edit-core" {
     export default class Core {
         constructor();
-        findAndCountPomodoroText(text: string, filePath: string, callbacks: Callbacks): void;
+        findAndStartTimer(text: string, filePath: string, callbacks: Callbacks): void;
     }
 
     export interface Callbacks {
@@ -12,7 +12,12 @@ declare module "pomodoro-edit-core" {
     }
 
     export interface PomodoroText {
+        id: string;
+        line: number;
+        checkboxCh: number;
+        operator: string;
         time: number;
+        extraTime: number;
         content: string;
     }
 }

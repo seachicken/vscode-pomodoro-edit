@@ -8,18 +8,47 @@ Pomodoro Timer with the simplest text syntax.
 
 Marketplace: https://marketplace.visualstudio.com/items?itemName=seitotanaka.vscode-pomodoro-edit
 
-## Usage
+## Syntax
 
-Edit the plane text or markdown file.
-
-It is supported format below.
-
+```md
+* [ ] [p25] xxx (supported unordered list bullet are '*' and '-')
+  * [ ] [p25] xxx
 ```
-[p25] xxx
-- [p25] xxx
-- [ ] [p25] xxx
+
+### Start timer
+
+```md
+* [ ] [p25] xxx (when after save, start timer)
+```
+
+### Finish timer
+
+```md
+* [x] [p25] xxx
+```
+
+### Pause timer
+
+```md
+* [ ] [-p25] xxx
+```
+
+### Add extra time
+
+```md
+* [ ] [p25+5] xxx
+```
+
+## Tips
+
+If multiple timers are required, pause the next timer beforehand so that the timer does not start unintentionally.
+
+```md
+* [x] [p25] xxx
+* [ ] [-p25] yyy
+* [ ] [-p25] zzz
 ```
 
 ## Add-ons
 
-[Chrome extension](https://chrome.google.com/webstore/detail/pomodoro-edit/mijjbmjlpkgjjpfkekdjgnkemlcfpcpo)
+You can get desktop notifications [here](https://chrome.google.com/webstore/detail/pomodoro-edit/mijjbmjlpkgjjpfkekdjgnkemlcfpcpo).
