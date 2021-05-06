@@ -21,7 +21,7 @@ export function activate(context: ExtensionContext) {
 	wss.on('connection', ws => socket = ws);
 
 	workspace.onDidSaveTextDocument(document => {
-		if (!isTarget(document.fileName)) {
+		if (!isTarget(document.languageId)) {
 			return;
 		}
 
@@ -74,10 +74,9 @@ export function activate(context: ExtensionContext) {
 	});
 }
 
-function isTarget(fileName: string): boolean {
-	const found = path.extname(fileName)
-		.match(/(^\.md$|^\.markdown$|^\.mdown$|^\.mkd$|^\.mkdown$|^\.txt$)/);
-	return found === null ? false : found.length >= 1;
+function isTarget(languageId: string): boolean {
+	// https://code.visualstudio.com/docs/languages/identifiers#_known-language-identifiers
+	return languageId === 'markdown' || languageId === 'plaintext';
 }
 
 export function deactivate() {}
