@@ -27,7 +27,7 @@ export function activate(context: ExtensionContext) {
 
 		core.findAndStartTimer(document.getText(), document.fileName, {
 			start: () => {
-				const task: any = window.withProgress({ location: ProgressLocation.Notification }, p => {
+				const task: any = window.withProgress<void>({ location: ProgressLocation.Notification }, p => {
 					progressWrapper.progress = p;
 					return new Promise((resolve, reject) => {
 						progressWrapper.resolve = resolve;
@@ -36,18 +36,39 @@ export function activate(context: ExtensionContext) {
 				});
 				context.subscriptions.push(task);
 			},
-			interval: (remaining, ptext) => {
+			interval: (remainingSec, durationSec, stepNos, ptext) => {
 				if (progressWrapper.progress) {
-					const time = Duration.fromMillis(remaining * 1000).toFormat('m:ss');
-					progressWrapper.progress.report({ increment: 100 / ptext.time, message: `${ptext.content} (${time})` });
+					const displayTime = Duration.fromMillis(remainingSec * 1000).toFormat('m:ss');
+					progressWrapper.progress.report({
+						increment: 100 / durationSec,
+						message: `${ptext.content} (${displayTime}${stepNos ? ' #' + stepNos : ''})`
+					});
 				}
+
 				if (socket && socket.readyState === WebSocket.OPEN) {
-					const ptextWithType = {
+					const body = {
 						type: 'interval',
-						remaining,
-						...ptext
+						remainingSec,
+						durationSec,
+						stepNos,
+						content: ptext.content
 					};
-					socket.send(JSON.stringify(ptextWithType));
+					socket.send(JSON.stringify(body));
+				}
+			},
+			step: ptext => {
+				if (progressWrapper.progress) {
+					progressWrapper.progress.report({ increment: -100, message: ptext.content });
+				}
+
+				if (socket && socket.readyState === WebSocket.OPEN) {
+					const body = {
+						type: 'step',
+						content: ptext.content
+					};
+					socket.send(JSON.stringify(body));
+				} else {
+					window.showInformationMessage(`🍅 Go to the next step\n${ptext.content}`, { modal: true });
 				}
 			},
 			finish: ptext => {
@@ -56,11 +77,11 @@ export function activate(context: ExtensionContext) {
 				}
 
 				if (socket && socket.readyState === WebSocket.OPEN) {
-					const ptextWithType = {
+					const body = {
 						type: 'finish',
-						...ptext
+						content: ptext.content
 					};
-					socket.send(JSON.stringify(ptextWithType));
+					socket.send(JSON.stringify(body));
 				} else {
 					window.showInformationMessage(`🍅 Finished!\n${ptext.content}`, { modal: true });
 				}

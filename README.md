@@ -11,32 +11,32 @@ Marketplace: https://marketplace.visualstudio.com/items?itemName=seitotanaka.vsc
 ## Syntax
 
 ```md
-* [ ] [p25] xxx (supported unordered list bullet are '*' and '-')
-  * [ ] [p25] xxx
+* [ ] [p25 p5] xxx (single pomodoro 🍅)
+* [ ] [(p25 p5)4] xxx (four pomodoros 🍅🍅🍅🍅) 
 ```
 
 ### Start timer
 
 ```md
-* [ ] [p25] xxx (when after save, start timer)
+* [ ] [(p25 p5)4] xxx (when after save, start timer)
 ```
 
 ### Finish timer
 
 ```md
-* [x] [p25] xxx
+* [x] [(p25 p5)4] xxx
 ```
 
 ### Pause timer
 
 ```md
-* [ ] [-p25] xxx
+* [ ] [-(p25 p5)4] xxx
 ```
 
-### Add extra time
+### Retry timer
 
 ```md
-* [ ] [p25+5] xxx
+* [ ] [(p25 p5)4] xxx. (when after enter dots and save, retry timer)
 ```
 
 ## Tips
@@ -44,9 +44,9 @@ Marketplace: https://marketplace.visualstudio.com/items?itemName=seitotanaka.vsc
 If multiple timers are required, pause the next timer beforehand so that the timer does not start unintentionally.
 
 ```md
-* [x] [p25] xxx
-* [ ] [-p25] yyy
-* [ ] [-p25] zzz
+* [x] [(p25 p5)4] xxx
+* [ ] [-(p25 p5)4] yyy
+* [ ] [-(p25 p5)4] zzz
 ```
 
 ## Add-ons
