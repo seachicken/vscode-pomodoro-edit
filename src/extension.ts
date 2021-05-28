@@ -4,8 +4,10 @@ import { Duration } from 'luxon';
 import * as WebSocket from 'ws';
 import Core from 'pomodoro-edit-core';
 
+let core: Core;
+
 export function activate(context: ExtensionContext) {
-	const core = new Core();
+	core = new Core();
 
 	const progressWrapper: {
 		progress?: Progress<{
@@ -100,4 +102,6 @@ function isTarget(languageId: string): boolean {
 	return languageId === 'markdown' || languageId === 'plaintext';
 }
 
-export function deactivate() {}
+export function deactivate() {
+	core.stopTimer();
+}

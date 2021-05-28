@@ -2,6 +2,7 @@ declare module "pomodoro-edit-core" {
     export default class Core {
         constructor();
         findAndStartTimer(text: string, filePath: string, callbacks: Callbacks): void;
+        stopTimer(): void;
     }
 
     export interface Callbacks {
