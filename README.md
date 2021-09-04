@@ -52,3 +52,4 @@ If multiple timers are required, pause the next timer beforehand so that the tim
 ## Add-ons
 
 You can get desktop notifications [here](https://chrome.google.com/webstore/detail/pomodoro-edit/mijjbmjlpkgjjpfkekdjgnkemlcfpcpo).
+You can get e-mail notifications [here](https://github.com/seachicken/pomodoro-edit-notifier)
