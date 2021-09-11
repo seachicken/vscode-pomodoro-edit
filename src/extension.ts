@@ -1,7 +1,6 @@
 import { ExtensionContext, workspace, ProgressLocation, window, Progress } from 'vscode';
 import * as path from 'path';
 import { Duration } from 'luxon';
-import * as WebSocket from 'ws';
 import Core from 'pomodoro-edit-core';
 
 let core: Core;
@@ -17,10 +16,8 @@ export function activate(context: ExtensionContext) {
 		resolve?: () => void,
 		reject?: () => void
 	} = {};
-
-	let socket: WebSocket;
-	const wss = new WebSocket.Server({ port: 62115 });
-	wss.on('connection', ws => socket = ws);
+	
+	core.runServer(62115);
 
 	workspace.onDidSaveTextDocument(document => {
 		if (!isTarget(document.languageId)) {
@@ -46,30 +43,13 @@ export function activate(context: ExtensionContext) {
 						message: `${ptext.content} (${displayTime}${stepNos ? ' #' + stepNos : ''})`
 					});
 				}
-
-				if (socket && socket.readyState === WebSocket.OPEN) {
-					const body = {
-						type: 'interval',
-						remainingSec,
-						durationSec,
-						stepNos,
-						content: ptext.content
-					};
-					socket.send(JSON.stringify(body));
-				}
 			},
 			step: ptext => {
 				if (progressWrapper.progress) {
 					progressWrapper.progress.report({ increment: -100, message: ptext.content });
 				}
 
-				if (socket && socket.readyState === WebSocket.OPEN) {
-					const body = {
-						type: 'step',
-						content: ptext.content
-					};
-					socket.send(JSON.stringify(body));
-				} else {
+				if (!core.runningServer()) {
 					window.showInformationMessage(`🍅 Go to the next step\n${ptext.content}`, { modal: true });
 				}
 			},
@@ -78,13 +58,7 @@ export function activate(context: ExtensionContext) {
 					progressWrapper.resolve();
 				}
 
-				if (socket && socket.readyState === WebSocket.OPEN) {
-					const body = {
-						type: 'finish',
-						content: ptext.content
-					};
-					socket.send(JSON.stringify(body));
-				} else {
+				if (!core.runningServer()) {
 					window.showInformationMessage(`🍅 Finished!\n${ptext.content}`, { modal: true });
 				}
 			},
@@ -103,5 +77,6 @@ function isTarget(languageId: string): boolean {
 }
 
 export function deactivate() {
+	core.closeServer();
 	core.stopTimer();
 }

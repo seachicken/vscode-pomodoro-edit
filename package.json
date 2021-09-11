@@ -39,7 +39,6 @@
 	"dependencies": {
 		"@types/luxon": "^1.21.0",
 		"luxon": "^1.21.3",
-		"pomodoro-edit-core": "^0.3.0",
-		"ws": "^7.4.6"
+		"pomodoro-edit-core": "^0.4.0"
 	}
 }

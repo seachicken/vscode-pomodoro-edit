@@ -3,6 +3,9 @@ declare module "pomodoro-edit-core" {
         constructor();
         findAndStartTimer(text: string, filePath: string, callbacks: Callbacks): void;
         stopTimer(): void;
+        runServer(port: number): void;
+        closeServer(): void;
+        runningServer(): boolean;
     }
 
     export interface Callbacks {
