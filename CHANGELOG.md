@@ -1,5 +1,11 @@
 # Change Log
 
+## v2.0.1
+
+**Fixed Bugs:**
+
+- Support multiple WebSocket clients
+
 ## v2.0.0
 
 **Enhancements:**
