@@ -1,5 +1,11 @@
 # Change Log
 
+## v2.1.0
+
+**Enhancements:**
+
+- Add autocomplete of Pomodoro edit syntax [#8](https://github.com/seachicken/vscode-pomodoro-edit/issues/8)
+
 ## v2.0.1
 
 **Fixed Bugs:**
