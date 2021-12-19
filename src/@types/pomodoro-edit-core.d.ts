@@ -23,4 +23,12 @@ declare module "pomodoro-edit-core" {
         operator: string;
         content: string;
     }
+
+    export function getReplacementRange(lineText: string, cursorPos: Position, bullet: string):
+        { found: boolean, start: Position, end: Position };
+
+    export interface Position {
+        line: number;
+        ch: number;
+    }
 }

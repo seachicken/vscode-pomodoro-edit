@@ -1,7 +1,21 @@
-import { ExtensionContext, workspace, ProgressLocation, window, Progress } from 'vscode';
-import * as path from 'path';
+import {
+	ExtensionContext,
+	workspace,
+	ProgressLocation,
+	window,
+	Progress,
+	languages,
+	Position,
+	CompletionItem,
+	CompletionItemKind,
+	SnippetString,
+	Range,
+	TextEdit
+} from 'vscode';
 import { Duration } from 'luxon';
-import Core from 'pomodoro-edit-core';
+import Core, { getReplacementRange } from 'pomodoro-edit-core';
+
+const SUPPORTED_LANGUAGE_IDS = ['markdown', 'plaintext'];
 
 let core: Core;
 
@@ -19,8 +33,44 @@ export function activate(context: ExtensionContext) {
 	
 	core.runServer(62115);
 
+	context.subscriptions.push(languages.registerCompletionItemProvider(SUPPORTED_LANGUAGE_IDS, {
+		provideCompletionItems(document, position) {
+			const bullet: string =
+				workspace.getConfiguration('markdown').get('extension.toc.unorderedList.marker') // if using yzhang.markdown-all-in-one
+				|| '-';
+			const { found, start, end } = getReplacementRange(
+				document.lineAt(position.line).text, { line: position.line, ch: position.character }, bullet);
+
+			const ptimer = new CompletionItem('Pomodoro Timer syntax', CompletionItemKind.Snippet);
+			ptimer.detail = 'Multiple pomodoros';
+			ptimer.documentation = `${bullet} [ ] [(p25 p5)1] `;
+            ptimer.insertText = new SnippetString(bullet + ' [ ] [$3(p25 p5)${1|1,2,3,4|}] $2');
+			if (found) {
+				ptimer.additionalTextEdits = [
+					TextEdit.delete(new Range(
+						new Position(start.line, start.ch),
+						new Position(end.line, end.ch)))
+					];
+			}
+
+			const timer = new CompletionItem('Single timer syntax', CompletionItemKind.Snippet);
+			timer.detail = 'Single timer';
+			timer.documentation = `${bullet} [ ] [p25] `;
+            timer.insertText = new SnippetString(bullet + ' [ ] [$3p${1|25,20,15,10,5|}] $2');
+			if (found) {
+				timer.additionalTextEdits = [
+					TextEdit.delete(new Range(
+						new Position(start.line, start.ch),
+						new Position(end.line, end.ch)))
+					];
+			}
+
+            return [ptimer, timer];
+		}
+	}));
+
 	workspace.onDidSaveTextDocument(document => {
-		if (!isTarget(document.languageId)) {
+		if (!isSupported(document.languageId)) {
 			return;
 		}
 
@@ -71,9 +121,9 @@ export function activate(context: ExtensionContext) {
 	});
 }
 
-function isTarget(languageId: string): boolean {
+function isSupported(languageId: string): boolean {
 	// https://code.visualstudio.com/docs/languages/identifiers#_known-language-identifiers
-	return languageId === 'markdown' || languageId === 'plaintext';
+	return SUPPORTED_LANGUAGE_IDS.some(id => id === languageId);
 }
 
 export function deactivate() {
