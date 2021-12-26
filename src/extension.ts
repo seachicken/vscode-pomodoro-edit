@@ -13,7 +13,7 @@ import {
 	TextEdit
 } from 'vscode';
 import { Duration } from 'luxon';
-import Core, { getReplacementRange } from 'pomodoro-edit-core';
+import Core, { getReplacementRange } from '@seachicken/pomodoro-edit-core';
 
 const SUPPORTED_LANGUAGE_IDS = ['markdown', 'plaintext'];
 
