@@ -1,4 +1,4 @@
-declare module "pomodoro-edit-core" {
+declare module "@seachicken/pomodoro-edit-core" {
     export default class Core {
         constructor();
         findAndStartTimer(text: string, filePath: string, callbacks: Callbacks): void;
