@@ -11,7 +11,7 @@ Marketplace: https://marketplace.visualstudio.com/items?itemName=seitotanaka.vsc
 ## Syntax
 
 ```md
-- [ ] [(p25 p5)4] xxx (four pomodoros 🍅🍅🍅🍅) 
+- [ ] [(p25✍️ p5☕️)4] xxx (four pomodoros 🍅🍅🍅🍅) 
 - [ ] [p25] xxx (single timer)
 ```
 

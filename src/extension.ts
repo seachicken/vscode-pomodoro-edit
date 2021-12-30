@@ -43,8 +43,8 @@ export function activate(context: ExtensionContext) {
 
 			const ptimer = new CompletionItem('Pomodoro Timer syntax', CompletionItemKind.Snippet);
 			ptimer.detail = 'Multiple pomodoros';
-			ptimer.documentation = `${bullet} [ ] [(p25 p5)1] `;
-            ptimer.insertText = new SnippetString(bullet + ' [ ] [$3(p25 p5)${1|1,2,3,4|}] $2');
+			ptimer.documentation = `${bullet} [ ] [(p25✍️ p5☕️)1] `;
+            ptimer.insertText = new SnippetString(bullet + ' [ ] [$3(p25✍️ p5☕️)${1|1,2,3,4|}] $2');
 			if (found) {
 				ptimer.additionalTextEdits = [
 					TextEdit.delete(new Range(
@@ -85,12 +85,13 @@ export function activate(context: ExtensionContext) {
 				});
 				context.subscriptions.push(task);
 			},
-			interval: (remainingSec, durationSec, stepNos, ptext) => {
+			interval: (remainingSec, durationSec, stepNos, symbol, ptext) => {
 				if (progressWrapper.progress) {
 					const displayTime = Duration.fromMillis(remainingSec * 1000).toFormat('m:ss');
+					const blank = symbol || stepNos ? ' ' : '';
 					progressWrapper.progress.report({
 						increment: 100 / durationSec,
-						message: `${ptext.content} (${displayTime}${stepNos ? ' #' + stepNos : ''})`
+						message: `${ptext.content} (${displayTime}${blank}${symbol || ''}${stepNos ? '#' + stepNos : ''})`
 					});
 				}
 			},
