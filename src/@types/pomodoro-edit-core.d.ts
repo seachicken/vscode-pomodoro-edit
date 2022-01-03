@@ -11,7 +11,7 @@ declare module "@seachicken/pomodoro-edit-core" {
     export interface Callbacks {
         start?: () => void;
         interval?: (remainingSec: number, durationSec: number, stepNos: string, symbol: string, ptext: PomodoroText) => void;
-        step?: (ptext: PomodoroText) => void;
+        step?: (stepNos: string, symbol: string, ptext: PomodoroText) => void;
         finish?: (ptext: PomodoroText) => void;
         cancel?: () => void;
     }
