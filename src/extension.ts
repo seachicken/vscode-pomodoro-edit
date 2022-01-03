@@ -95,13 +95,14 @@ export function activate(context: ExtensionContext) {
 					});
 				}
 			},
-			step: ptext => {
+			step: (stepNos, symbol, ptext) => {
 				if (progressWrapper.progress) {
 					progressWrapper.progress.report({ increment: -100, message: ptext.content });
 				}
 
 				if (!core.runningServer()) {
-					window.showInformationMessage(`🍅 Go to the next step\n${ptext.content}`, { modal: true });
+					const blank = symbol || stepNos ? ' ' : '';
+					window.showInformationMessage(`🍅 Go to the next step\n${ptext.content}${blank}${symbol}${stepNos ? '#' + stepNos : ''}`, { modal: true });
 				}
 			},
 			finish: ptext => {
