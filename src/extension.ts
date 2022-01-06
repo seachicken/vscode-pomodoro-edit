@@ -43,8 +43,8 @@ export function activate(context: ExtensionContext) {
 
 			const ptimer = new CompletionItem('Pomodoro Timer syntax', CompletionItemKind.Snippet);
 			ptimer.detail = 'Multiple pomodoros';
-			ptimer.documentation = `${bullet} [ ] [(p25✍️ p5☕️)1] `;
-            ptimer.insertText = new SnippetString(bullet + ' [ ] [$3(p25✍️ p5☕️)${1|1,2,3,4|}] $2');
+			ptimer.documentation = `${bullet} [ ] [(25m✍️ 5m☕️)1] `;
+			ptimer.insertText = new SnippetString(bullet + ' [ ] [$3(25m✍️ 5m☕️)${1|1,2,3,4|}] $2');
 			if (found) {
 				ptimer.additionalTextEdits = [
 					TextEdit.delete(new Range(
@@ -55,8 +55,8 @@ export function activate(context: ExtensionContext) {
 
 			const timer = new CompletionItem('Single timer syntax', CompletionItemKind.Snippet);
 			timer.detail = 'Single timer';
-			timer.documentation = `${bullet} [ ] [p25] `;
-            timer.insertText = new SnippetString(bullet + ' [ ] [$3p${1|25,20,15,10,5|}] $2');
+			timer.documentation = `${bullet} [ ] [25m] `;
+			timer.insertText = new SnippetString(bullet + ' [ ] [$3${1|25,20,15,10,5|}m] $2');
 			if (found) {
 				timer.additionalTextEdits = [
 					TextEdit.delete(new Range(

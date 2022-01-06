@@ -8,37 +8,45 @@ Pomodoro Timer with the simplest text syntax.
 
 Marketplace: https://marketplace.visualstudio.com/items?itemName=seitotanaka.vscode-pomodoro-edit
 
-## Syntax
+## Examples
 
 ```md
-- [ ] [(p25✍️ p5☕️)4] xxx (four pomodoros 🍅🍅🍅🍅) 
-- [ ] [p25] xxx (single timer)
+# four pomodoros
+- [ ] [(25m✍️ 5m☕️)4] xxx
+
+# four pomodoros and then take a long break
+- [ ] [((25m✍️ 5m☕️)4 20m🛌)] xxx
+
+# single timer
+- [ ] [25m] xxx
 ```
+
+[Syntax details](https://github.com/seachicken/pomodoro-edit-core#syntax)
 
 💡Ctrl+Space: Autocomplete above syntax
 
 ### Start timer
 
 ```md
-- [ ] [(p25 p5)4] xxx (when after save, start timer)
+- [ ] [(25m 5m)4] xxx (when after save, start timer)
 ```
 
 ### Finish timer
 
 ```md
-- [x] [(p25 p5)4] xxx
+- [x] [(25m 5m)4] xxx
 ```
 
 ### Pause timer
 
 ```md
-- [ ] [-(p25 p5)4] xxx
+- [ ] [-(25m 5m)4] xxx
 ```
 
 ### Retry timer
 
 ```md
-- [ ] [(p25 p5)4] xxx. (when after enter dots and save, retry timer)
+- [ ] [(25m 5m)4] xxx. (when after enter dots and save, retry timer)
 ```
 
 ## Tips
@@ -46,9 +54,9 @@ Marketplace: https://marketplace.visualstudio.com/items?itemName=seitotanaka.vsc
 If multiple timers are required, pause the next timer beforehand so that the timer does not start unintentionally.
 
 ```md
-- [x] [(p25 p5)4] xxx
-- [ ] [-(p25 p5)4] yyy
-- [ ] [-(p25 p5)4] zzz
+- [x] [(25m 5m)4] xxx
+- [ ] [-(25m 5m)4] yyy
+- [ ] [-(25m 5m)4] zzz
 ```
 
 ## Add-ons
