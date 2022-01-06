@@ -11,9 +11,14 @@ Marketplace: https://marketplace.visualstudio.com/items?itemName=seitotanaka.vsc
 ## Examples
 
 ```md
-- [ ] [(25m✍️ 5m☕️)4] xxx (four pomodoros) 
-- [ ] [((25m✍️ 5m☕️)4 20m🛌)] xxx (four pomodoros and then take a long break) 
-- [ ] [25m] xxx (single timer)
+# four pomodoros
+- [ ] [(25m✍️ 5m☕️)4] xxx
+
+# four pomodoros and then take a long break
+- [ ] [((25m✍️ 5m☕️)4 20m🛌)] xxx
+
+# single timer
+- [ ] [25m] xxx
 ```
 
 [Syntax details](https://github.com/seachicken/pomodoro-edit-core#syntax)
