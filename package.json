@@ -2,7 +2,7 @@
 	"name": "vscode-pomodoro-edit",
 	"displayName": "Pomodoro Edit",
 	"description": "Pomodoro timer for VSCode",
-	"version": "2.3.0",
+	"version": "2.3.1",
 	"publisher": "seitotanaka",
 	"icon": "images/logo.png",
 	"repository": "https://github.com/seachicken/vscode-pomodoro-edit",
