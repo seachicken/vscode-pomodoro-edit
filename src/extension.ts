@@ -12,7 +12,6 @@ import {
 	Range,
 	TextEdit
 } from 'vscode';
-import { Duration } from 'luxon';
 import Core, { getReplacementRange } from '@seachicken/pomodoro-edit-core';
 
 const SUPPORTED_LANGUAGE_IDS = ['markdown', 'plaintext'];
@@ -87,7 +86,7 @@ export function activate(context: ExtensionContext) {
 			},
 			interval: (remainingSec, durationSec, stepNos, symbol, ptext) => {
 				if (progressWrapper.progress) {
-					const displayTime = Duration.fromMillis(remainingSec * 1000).toFormat('m:ss');
+					const displayTime = `${Math.floor(remainingSec / 60)}:${(remainingSec % 60).toString().padStart(2, '0')}`;
 					const blank = symbol || stepNos ? ' ' : '';
 					progressWrapper.progress.report({
 						increment: 100 / durationSec,
